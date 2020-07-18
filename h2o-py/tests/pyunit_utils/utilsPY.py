@@ -2850,7 +2850,12 @@ def evaluate_early_stopping(metric_list, stop_round, tolerance, bigger_is_better
         metric_list.reverse()
 
     shortest_len = 2*stop_round
-    bestInLastK = 1.0*sum(metric_list[0:stop_round])/stop_round
+    if (isinstance(metric_list[0], float)):
+        startIdx = 0
+    else:
+        startIdx = 1
+        
+    bestInLastK = 1.0*sum(metric_list[startIdx:stop_round])/stop_round
     lastBeforeK = 1.0*sum(metric_list[stop_round:shortest_len])/stop_round
 
     if not(np.sign(bestInLastK) == np.sign(lastBeforeK)):
